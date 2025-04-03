@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style//page-struct.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style//calendar-dropdown.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style//layout.css') }}">
+
+    <body>
+        <div id="wievport-window" style="display:flex; width:100%; height: calc(100% - 50px - 10px);">
+            <div class="rounded-flex-div" style="width:50px; display:flex; flex-direction:column;">
+                X
+            </div>
+            {% block content %}{% endblock %}
+        </div>
+
+        <div id="version-bar" class="rounded-flex-div" style="height:50px; width:100%; margin-top:10px; border-radius:0px;">
+            bottom text
+        </div>
+    </body>
+</html>

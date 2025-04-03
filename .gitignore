@@ -1,0 +1,10 @@
+.idea/
+*.pyc
+
+static/icons/
+static/style/month.css
+templates/data.html
+
+out.xml
+scr/
+!src/Entry.py

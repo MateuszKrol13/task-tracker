@@ -1,0 +1,134 @@
+{% extends 'main.html' %}
+{% block content %}
+<script src="{{ url_for('static', filename='scripts//toggleTab.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts//modifyIssue.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='style//clickable-table.css') }}">
+
+<div class="rounded-flex-div scrollable-table" id="col-2" style="width:70%; margin:0px 10px; padding: 0px;">
+    <table id="table-entries" class="clean-table" style="border-radius:10px;">
+        <thead><tr>
+            <th id="row-title">Title</th>
+            <th id="row-desc">Description</th>
+            <th id="row-ctime">Create time</th>
+            <th id="row-due">Due date</th>
+            <th id="row-test">Time estimation</th>
+            <th id="row-prio">Priority</th>
+        </tr></thead>
+        <tbody>
+            {% for entry in entries %}
+            <tr name="FILL-THIS-WITH-UNIQUE-KEY" onclick="modifyIssue(this, tab2);">
+                <td headers="row-title">{{ entry.title }}</td>
+                <td headers="row-desc">{{ entry.description }}</td>
+                <td headers="row-ctime">{{ entry.create_time }}</td>
+                <td headers="row-due">{{ entry.due_date }}</td>
+                <td headers="row-test">{{ entry.time_estimation }}</td>
+                <td headers="row-prio">{{ entry.priority }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="tab-bar" style="display:flex;">
+            <input type="checkbox" id="tab1-toggle" onclick="toggleTab(tab1);">
+            <input type="checkbox" id="tab2-toggle" onclick="toggleTab(tab2);">
+            <input type="checkbox" id="tab3-toggle" onclick="toggleTab(tab3);">
+    </div>
+</div>
+
+<div name="col-1" class="rounded-flex-div" style="width:30%; display:flex; justify-content:space-between; flex-direction:column;">
+    <div class="tab-container">
+
+        <!-- Tab content -->
+        <div id="tab1" class="tab-content" style="display:none">
+            <form method="post" id="add-issue" name="add-issue-form">
+                <h2>Create new issue</h2>
+                <div>Title: <input id="new-entry-title" name="new-entry-title"></div><br>
+                <div>Description: <input id="new-entry-description" name="new-entry-description"></div><br>
+                <div>Due date
+                    <div class="dropdown">
+                        <button class="dropbtn">Dropdown</button>
+                        <div class="dropdown-content">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                    </div>
+
+                    <input id="new-entry-due-date" name="new-entry-due-date">
+                </div><br>
+
+                <div>Time estimation:
+                    <div>
+                        D:<input name="new-entry-time-est-days" type="numeric" style="width:2em" maxlength="2">
+                        H:<input name="new-entry-time-est-hours" type="numeric" style="width:2em" maxlength="2">
+                        M:<input name="new-entry-time-est-minutes" type="numeric" style="width:2em" maxlength="2">
+                    </div>
+                </div><br>
+                <div>Priority:
+                    <select id="new-entry-pro" name="new-entry-prio">
+                        {% for i in range(1, 6) %} <option value="{{ i }}">Prio {{ i }}</option> {% endfor %}
+                    </select>
+                </div>
+            </form>
+            <button name="create-new-entry" form="add-issue">Add issue</button>
+        </div>
+
+        <div id="tab2" class="tab-content" style="display:none">
+            <form method="post" id="modify-issue" name="modify-issue-form">
+                <h2>Modify issue</h2>
+                <div>Title: <input id="modify-entry-title" name="modify-entry-title"></div><br>
+                <div>Description: <input id="modify-entry-description" name="modify-entry-description"></div><br>
+                <div>Due date
+                    <div class="dropdown">
+                        <button class="dropbtn">Dropdown</button>
+                        <div class="dropdown-content">
+                            <a href="#">Link 1</a>
+                            <a href="#">Link 2</a>
+                            <a href="#">Link 3</a>
+                        </div>
+                    </div>
+
+                    <input id="modify-entry-due-date" name="modify-entry-due-date">
+                </div><br>
+
+                <div>Time estimation:
+                    <div>
+                        D:<input name="modify-entry-time-est-days" type="numeric" style="width:2em" maxlength="2">
+                        H:<input name="modify-entry-time-est-hours" type="numeric" style="width:2em" maxlength="2">
+                        M:<input name="modify-entry-time-est-minutes" type="numeric" style="width:2em" maxlength="2">
+                    </div>
+                </div><br>
+                <div>Priority:
+                    <select id="modify-entry-prio" name="modify-entry-prio">
+                        {% for i in range(1, 6) %} <option value="{{ i }}">Prio {{ i }}</option> {% endfor %}
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <div id="tab3" class="tab-content" style="display:none">
+            <form method="post" id="delete-issue" name="delete-issue-form" style="">
+                <h2>Delete issue</h2>
+                <div>Title: <input id="delete-entry-title" name="delete-entry-title"></div><br>
+                <div>Description: <input id="delete-entry-description" name="delete-entry-description"></div><br>
+
+                <button>Confirm delete</button>
+            </form>
+        </div>
+    </div>
+
+    <div name="buttons-div">
+        <button name="entries-to-xml">to xml</button>
+        <button name="entries-from-xml">from xml</button>
+    </div>
+
+</div>
+
+<div id="add-issue-div" style="display:none;">
+
+</div>
+
+
+
+
+{% endblock %}
+

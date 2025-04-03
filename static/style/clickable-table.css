@@ -1,0 +1,50 @@
+/*
+========================================================================================================================
+                                                      Table styling
+========================================================================================================================
+*/
+
+.clean-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.clean-table th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.clean-table th {
+    background-color: #0073e6;
+    color: white;
+}
+
+.clean-table tr {cursor: pointer;}
+.clean-table tr:nth-child(even) {background-color: #f2f2f2;}
+.clean-table tr:hover {background-color: #ddd;}
+
+.scrollable-table {
+    overflow: hidden;
+    overflow-y:auto;
+    -ms-overflow-style:none;
+    scrollbar-width:none;
+}
+
+.scrollable-table th:first-child {
+    border-top-left-radius: 10px;
+}
+
+.scrollable-table th:last-child {
+    border-top-right-radius: 10px;
+}
+
+.scrollable-table tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+.scrollable-table tr:last-child td:last-child {
+  border-bottom-right-radius: 10px;
+}

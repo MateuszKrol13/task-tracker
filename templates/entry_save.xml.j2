@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<logEntries>
+    {% for entry in entries %}
+    <entry
+        title="{{ entry.title }}"
+        description="{{ entry.description }}"
+        createTime="{{ entry.create_time }}"
+        timeEstimation="{{ entry.time_estimation }}"
+        dueDate="{{ entry.due_date }}"
+        priority="{{ entry.priority }}"
+    />
+    {% endfor %}
+</logEntries>

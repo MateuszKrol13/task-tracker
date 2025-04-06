@@ -2,6 +2,7 @@
 {% block content %}
 <script src="{{ url_for('static', filename='scripts//toggleTab.js') }}"></script>
 <script src="{{ url_for('static', filename='scripts//modifyIssue.js') }}"></script>
+<script src="{{ url_for('static', filename='scripts//selectRow.js') }}"></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='style//clickable-table.css') }}">
 
 <div class="rounded-flex-div scrollable-table" id="col-2" style="width:70%; margin:0px 10px; padding: 0px;">
@@ -16,7 +17,7 @@
         </tr></thead>
         <tbody>
             {% for entry in entries %}
-            <tr name="FILL-THIS-WITH-UNIQUE-KEY" onclick="modifyIssue(this, tab2);">
+            <tr id="{{ entry.id }}" onclick="selectRow(this);">
                 <td headers="row-title">{{ entry.title }}</td>
                 <td headers="row-desc">{{ entry.description }}</td>
                 <td headers="row-ctime">{{ entry.create_time }}</td>
@@ -28,14 +29,14 @@
         </tbody>
     </table>
     <div class="tab-bar" style="display:flex;">
-            <input type="checkbox" id="tab1-toggle" onclick="toggleTab(tab1);">
-            <input type="checkbox" id="tab2-toggle" onclick="toggleTab(tab2);">
-            <input type="checkbox" id="tab3-toggle" onclick="toggleTab(tab3);">
+        <button id="tab1-toggle" onclick="toggleTab(tab1);"> Create </button>
+        <button id="tab2-toggle" onclick="toggleTab(tab2);" style="margin-left:10px; margin-right:10px;"> Modify </button>
+        <button id="tab3-toggle" onclick="toggleTab(tab3);"> Delete </button>
     </div>
 </div>
 
-<div name="col-1" class="rounded-flex-div" style="width:30%; display:flex; justify-content:space-between; flex-direction:column;">
-    <div class="tab-container">
+<div id="col-1" class="rounded-flex-div" style="width:30%; ">
+    <div class="tab-container" style="height:100%; display:flex; justify-content:space-between; flex-direction:column;">
 
         <!-- Tab content -->
         <div id="tab1" class="tab-content" style="display:none">
@@ -69,6 +70,7 @@
                     </select>
                 </div>
             </form>
+
             <button name="create-new-entry" form="add-issue">Add issue</button>
         </div>
 
@@ -110,22 +112,29 @@
                 <h2>Delete issue</h2>
                 <div>Title: <input id="delete-entry-title" name="delete-entry-title"></div><br>
                 <div>Description: <input id="delete-entry-description" name="delete-entry-description"></div><br>
-
-                <button>Confirm delete</button>
             </form>
+            <button type="submit" form="delete-issue" style="bottom:0;">Confirm delete</button>
         </div>
     </div>
 
-    <div name="buttons-div">
-        <button name="entries-to-xml">to xml</button>
-        <button name="entries-from-xml">from xml</button>
-    </div>
-
 </div>
 
-<div id="add-issue-div" style="display:none;">
+<script>
+    function getElement(entryElement) {
+        element = document.getElementById(entryElement)
+        const obj = {{ url_for("entry_to_javascript") }} + "?" + element.id.toString();
+        fetch(obj).then(response => response.json()).then(data => console.log(data));
+    }
 
-</div>
+    function sendElement() {
+        fetch({{ url_for("entry_to_javascript") }}, {
+            "method": "POST",
+            "headers": {"Content-Type" : "application/json"},
+            "body": JSON.stringify({"element_id" : 12}),
+        });
+    }
+
+</script>
 
 
 

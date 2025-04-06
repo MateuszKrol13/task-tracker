@@ -2,6 +2,7 @@
 <logEntries>
     {% for entry in entries %}
     <entry
+        id="{{ entry.id }}"
         title="{{ entry.title }}"
         description="{{ entry.description }}"
         createTime="{{ entry.create_time }}"

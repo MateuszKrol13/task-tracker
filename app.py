@@ -9,6 +9,7 @@ class WebApp():
     planner_entries: list[Entry]
 
     def run(self, *args, **kwargs):
+        Entry.id_counter = 0
         self.load_app_state()
         self.set_routes()
         self.app.run(*args, **kwargs)
@@ -19,15 +20,19 @@ class WebApp():
 
         for entry in entries_xml:
             a = Entry(
+                id_=entry.attrib['id'],
                 ctime=entry.attrib['createTime'],
                 title=entry.attrib['title'],
                 desc=entry.attrib['description'],
                 due=entry.attrib['dueDate'],
                 est=entry.attrib['timeEstimation'],
-                prio=entry.attrib['priority']
+                prio=entry.attrib['priority'],
+                load_obj = True,
             )
 
             self.planner_entries.append(a)
+
+        Entry.id_counter = max([entry.id if self.planner_entries else 0 for entry in self.planner_entries])
 
     def set_routes(self):
 
@@ -70,6 +75,14 @@ class WebApp():
 
             return render_template(template_name_or_list='data.html', date=month_html)
 
+        @self.app.route('/get-entry/', methods=['POST', 'GET'])
+        def entry_to_javascript():
+            if request.method == "GET":
+                return self.planner_entries[0].to_dict()
+
+            if request.method == "POST":
+                print(request.json['element_id'])
+                return request.referrer
 
 if __name__ == '__main__':
     app = WebApp()

@@ -25,6 +25,7 @@
 .clean-table tr {cursor: pointer;}
 .clean-table tr:nth-child(even) {background-color: #f2f2f2;}
 .clean-table tr:hover {background-color: #ddd;}
+.clean-table tr:focus {background-color: #03f1aa;}
 
 .scrollable-table {
     overflow: hidden;
@@ -47,4 +48,9 @@
 
 .scrollable-table tr:last-child td:last-child {
   border-bottom-right-radius: 10px;
+}
+
+.selected {
+    background-color: #aaa !important;
+    transition-duration:0.3s;
 }
